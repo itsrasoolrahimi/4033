@@ -1,248 +1,496 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>دروس کامپیوتر 4033</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap RTL CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-  <style>
-  /* ─────────────── عمومی صفحه ─────────────── */
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست دروس دانشگاه تهران شمال</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-Variable-font-face.css">
+    <style>
+        /* --- General HTML and BODY settings to remove full page scroll --- */
+        html, body {
+            height: 100%; /* Ensure html and body take full page height */
+            margin: 0;
+            padding: 0;
+            /*overflow: hidden; !* **Important: No vertical or horizontal scrollbars for the entire page (body and html)** *!*/
+        }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background: #f8f9fa;
-    transition: background 0.2s;
-    overflow: hidden;
-  }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f8f9fa;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Sets minimum page height to 100% of viewport height */
+        }
+        .dark-mode {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+        .dark-mode .navbar {
+            background-color: #212529 !important;
+            color: #f8f9fa !important;
+        }
+        .dark-mode .navbar-brand {
+            color: #f8f9fa !important;
+        }
 
-  body.dark-mode {
-    background: #181b1f !important;
-  }
+        /* --- Main content container (main) for flexible space management --- */
+        main {
+            flex-grow: 1; /* This element occupies all remaining space between navbar and footer */
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 15px; /* Top, bottom, left, and right padding for the container */
+            box-sizing: border-box; /* Padding included within width and height */
+        }
 
-  .bg-white,
-  .border-bottom {
-    transition: background 0.2s, border-color 0.2s;
-  }
+        /* No need to reset .container as main already has padding */
+        .container {
+            width: 100%; /* Ensure containers occupy full width */
+            margin-left: auto;
+            margin-right: auto;
+            /* Remove Bootstrap's default .container paddings to avoid conflict */
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        /* Set max-width for .container according to Bootstrap */
+        @media (min-width: 576px) { .container { max-width: 540px; } }
+        @media (min-width: 768px) { .container { max-width: 720px; } }
+        @media (min-width: 992px) { .container { max-width: 960px; } }
+        @media (min-width: 1200px) { .container { max-width: 1140px; } }
+        @media (min-width: 1400px) { .container { max-width: 1320px; } }
 
-  body.dark-mode .bg-white,
-  body.dark-mode .border-bottom {
-    background: #23262a !important;
-    border-color: #333 !important;
-  }
+        /* --- Filter button styles --- */
+        .btn-group .btn {
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            box-shadow: none !important;
+            outline: none !important;
+            background-color: transparent;
+            color: #0d6efd;
+            border-color: #0d6efd;
+            border-radius: 0 !important;
+        }
+        .btn-group > .btn:first-child {
+            border-top-right-radius: var(--bs-border-radius, 0.375rem) !important;
+            border-bottom-right-radius: var(--bs-border-radius, 0.375rem) !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+        .btn-group > .btn:last-child {
+            border-top-left-radius: var(--bs-border-radius, 0.375rem) !important;
+            border-bottom-left-radius: var(--bs-border-radius, 0.375rem) !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
+        .btn-group .btn.active,
+        .btn-group .btn:focus {
+            background-color: #0d6efd;
+            color: #fff;
+            border-color: #0d6efd;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        .btn-group .btn:hover:not(.active) {
+            background-color: #e9ecef;
+            color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        body.dark-mode .btn-group .btn.active,
+        body.dark-mode .btn-group .btn:focus {
+            background-color: #ffdf00;
+            color: #23262a;
+            border-color: #ffdf00;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        body.dark-mode .btn-outline-primary {
+            color: #ffdf00;
+            border-color: #ffdf00;
+            background-color: transparent;
+        }
+        body.dark-mode .btn-outline-primary:hover:not(.active) {
+            background-color: #ffdf00;
+            color: #23262a;
+            border-color: #ffdf00;
+        }
+        /* --- End filter button styles --- */
 
-  .text-primary {
-    transition: color 0.2s;
-  }
+        .dark-mode .form-control {
+            background-color: #495057;
+            color: #f8f9fa;
+            border-color: #6c757d;
+        }
+        .dark-mode .form-control::placeholder {
+            color: #ced4da;
+            opacity: 0.7;
+        }
+        .dark-mode .table {
+            --bs-table-bg: #212529;
+            --bs-table-color: #f8f9fa;
+            --bs-table-striped-bg: #2c3034;
+            --bs-table-striped-color: #f8f9fa;
+            --bs-table-hover-bg: #373b3e;
+            --bs-table-hover-color: #f8f9fa;
+            --bs-table-border-color: #495057;
+        }
 
-  body.dark-mode .text-primary {
-    color: #ffdf00 !important;
-  }
+        /* --- table-responsive height setting and scroll management (most important part) --- */
+        .table-responsive {
+            overflow-y: auto; /* **Important: Vertical scroll only for the table** */
+            overflow-x: auto; /* Horizontal scroll for the table */
+            position: relative;
+            /* **Set fixed height to display 10 rows (approx 40px per row + 50px for header)** */
+            max-height: 450px; /* Adjust this value based on your approximate 10-row height */
+        }
 
-  .update-text {
-    font-size: 1.1rem;
-    color: #6c757d;
-    margin-bottom: 0.7rem;
-    text-align: right;
-    transition: color 0.2s;
-  }
 
-  body.dark-mode .update-text {
-    color: #aaa;
-  }
+        /* --- Table specific changes --- */
+        .table td {
+            white-space: nowrap !important; /* **Text remains on a single line** */
+            overflow: hidden !important;     /* **Overflow content is hidden** */
+            text-overflow: ellipsis !important; /* **Show ellipsis for long texts** */
+            min-width: 50px !important;
+            width: auto !important;
+            box-sizing: border-box !important;
+            padding: 8px !important; /* Proper spacing */
+            vertical-align: top !important;
+            text-align: center !important;
+        }
 
-  .table-area {
-    flex: 1;
-    overflow: auto;           /* ← اسکرول افقی/عمودی در صورت نیاز */
-    padding: 1rem;
-    transition: background 0.2s;
-  }
+        .table th {
+            white-space: nowrap !important; /* Headers remain on a single line */
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            min-width: 50px !important;
+            box-sizing: border-box !important;
+            padding: 8px !important; /* Proper spacing */
+            text-align: center !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 2 !important;
+            background-color: var(--bs-table-bg, #f8f9fa) !important;
+        }
+        /* --- End table specific changes --- */
 
-  body.dark-mode .table-area {
-    background: #181b1f;
-  }
+        /* --- Theme toggle button styles --- */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+            margin-left: 15px;
+        }
 
-  /* ─────────────── جدول و ستون‌ها ─────────────── */
-  table {
-    width: 100%;
-    min-width: 700px;          /* جدول خیلی فشرده نشود (دسکتاپ) */
-    table-layout: auto;        /* ← ستون‌ها براساس محتوا پهن می‌شوند */
-    border-collapse: collapse;
-  }
+        .navbar .container-fluid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-  thead th,
-  tbody td {
-    white-space: nowrap !important; /* همه چیز در یک خط */
-    overflow: visible !important;   /* چیزی بریده نشود */
-    padding: 0.5rem 0.75rem;
-  }
+        .theme-toggle {
+            background: var(--toggle-bg, #a0a0a0);
+            border: 2px solid var(--toggle-border, #808080);
+            border-radius: 1.2em;
+            cursor: pointer;
+            display: flex;
+            font-size: 0.9rem;
+            padding: 0.2em;
+            position: relative;
+            width: 3.5em;
+            height: 2em;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            overflow: hidden;
+        }
 
-  /* ستون شمارهٔ ردیف کمی باریک‌تر بماند */
-  thead th:first-child,
-  tbody td:first-child {
-    width: 60px;               /* مقدار ثابت، قابل تغییر */
-  }
+        .theme-toggle:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
 
-  thead th {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.07);
-    border-top: none !important;
-    transition: background 0.2s, color 0.2s;
-  }
+        .theme-toggle .light-icon,
+        .theme-toggle .dark-icon {
+            position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            font-size: 1em;
+        }
 
-  thead.table-dark th {
-    background: #212529;
-    color: #fff;
-  }
+        .theme-toggle .light-icon {
+            left: 0.3em;
+            opacity: 1;
+        }
 
-  body.dark-mode thead.table-dark th {
-    background: #181b1f !important;
-    color: #ffdf00 !important;
-  }
+        .theme-toggle .dark-icon {
+            right: 0.3em;
+            opacity: 0;
+            transform: translateX(100%);
+        }
 
-  /* ─────────────── دکمه‌های فیلتر ─────────────── */
-  .btn-group .btn {
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-  }
+        .theme-toggle .toggle-track {
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 0.1em;
+            left: 0.2em;
+            width: 1.6em;
+            height: 1.6em;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.2);
+        }
 
-  .btn-group .btn.active,
-  .btn-group .btn:focus {
-    background-color: #0d6efd;
-    color: #fff;
-    border-color: #0d6efd;
-  }
+        .dark-mode .theme-toggle {
+            --toggle-bg: #0d6efd;
+            --toggle-border: #0a58ca;
+        }
 
-  body.dark-mode .btn-group .btn.active,
-  body.dark-mode .btn-group .btn:focus {
-    background-color: #ffdf00;
-    color: #23262a;
-    border-color: #ffdf00;
-  }
+        .dark-mode .theme-toggle .light-icon {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
 
-  body.dark-mode .btn-outline-primary {
-    color: #ffdf00;
-    border-color: #ffdf00;
-  }
+        .dark-mode .theme-toggle .dark-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
-  body.dark-mode .btn-outline-primary:hover {
-    background-color: #ffdf00;
-    color: #23262a;
-    border-color: #ffdf00;
-  }
+        .dark-mode .theme-toggle .toggle-track {
+            transform: translateX(1.5em);
+            background-color: #f8f9fa;
+        }
+        /* --- End theme toggle button styles --- */
 
-  /* ─────────────── دکمه شناور (تغییر تم) ─────────────── */
-  .fab {
-    position: fixed;
-    left: 32px;
-    bottom: 32px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #0d6efd;
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
-    cursor: pointer;
-    z-index: 1100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s, box-shadow 0.15s;
-    padding: 0;
-  }
+        /* --- Footer and last modified styles --- */
+        footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            text-align: center;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+            padding: 15px 0; /* Padding for footer's inner space */
+        }
+        .dark-mode footer {
+            background-color: #212529;
+            border-top-color: #495057;
+            color: #f8f9fa;
+        }
+        .last-modified-container {
+            font-size: 0.85rem;
+        }
+        .last-modified-container p {
+            margin-bottom: 0;
+            color: inherit;
+        }
+        .dark-mode .last-modified-container p {
+            color: inherit !important;
+        }
+        /* --- End footer and last modified styles --- */
 
-  .fab:hover,
-  .fab:focus {
-    background: #084298;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-    outline: none;
-  }
+        .search-input-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        /* --- Search icon settings --- */
+        .search-input-container i {
+            position: absolute;
+            left: 0 !important; /* Position search icon to the left */
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            color: #6c757d !important;
+            z-index: 10 !important;
+            font-size: 1.1rem !important;
+            /* padding: 10px;*/
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 20px;
 
-  body.dark-mode .fab {
-    background: #212529;
-    color: #ffe066;
-  }
+        }
+        .form-control-search {
+            padding-left: 45px !important; /* Adjust padding to make space for the icon */
+            padding-right: 15px !important;
+        }
+        /* --- End search icon settings --- */
 
-  .fab svg {
-    width: 24px;
-    height: 24px;
-  }
+        /* --- New styles for click-to-copy functionality --- */
+        .table-cell-copyable {
+            position: relative;
+            cursor: pointer;
+            padding-right: 25px !important; /* Padding for copy icon on the right */
+            text-align: right !important; /* Align text to the right */
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
 
-  #moonIcon {
-    transform: translateX(2px);
-  }
+        .copy-icon {
+            position: absolute;
+            right: 8px; /* Position icon to the right of the cell */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9em;
+            color: #6c757d;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            pointer-events: none; /* Icon does not interfere with clicks until hovered */
+        }
 
-  /* ─────────────── واکنش‌گرایی ─────────────── */
-  @media (max-width: 700px) {
-    .fab {
-      left: 16px;
-      bottom: 16px;
-      width: 48px;
-      height: 48px;
-    }
+        .table-cell-copyable:hover .copy-icon {
+            opacity: 1;
+            pointer-events: auto; /* Enable clicks on icon when hovered */
+        }
 
-    .fab svg {
-      width: 20px;
-      height: 20px;
-    }
+        .dark-mode .copy-icon {
+            color: #ced4da;
+        }
 
-    table {
-      min-width: 0;            /* روی موبایل اجازهٔ فشرده‌سازی بیشتر بده */
-    }
+        .copy-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1000;
+            white-space: nowrap;
+        }
 
-    .table-area {
-      padding: 0.5rem;
-    }
-  }
-</style>
+        .copy-message.show {
+            opacity: 1;
+        }
+        /* --- End new styles for click-to-copy functionality --- */
 
+        /* --- Media Query for responsive mode (mobile) --- */
+        @media (max-width: 767px) {
+            .navbar-brand {
+                font-size: 0.9rem;
+            }
+            .navbar .container-fluid {
+                flex-wrap: nowrap;
+            }
+
+            .btn-group .btn {
+                font-size: 0.8rem;
+                padding: 0.375rem 0.5rem;
+            }
+            .search-input-container {
+                margin-bottom: 0.5rem;
+            }
+            .table td,
+            .table th {
+                padding: 6px !important; /* Smaller padding for mobile */
+            }
+            .theme-toggle {
+                font-size: 0.8rem;
+                width: 3em;
+                height: 1.8em;
+            }
+            .theme-toggle .toggle-track {
+                width: 1.4em;
+                height: 1.4em;
+                top: 0.2em;
+                left: 0.2em;
+            }
+            .dark-mode .theme-toggle .toggle-track {
+                transform: translateX(1.2em);
+            }
+            .theme-toggle .light-icon,
+            .theme-toggle .dark-icon {
+                font-size: 0.9em;
+            }
+            footer {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .last-modified-container {
+                font-size: 0.75rem;
+            }
+            .table-cell-copyable {
+                padding-right: 25px !important;
+            }
+            .copy-icon {
+                right: 5px; /* Copy icon position on mobile */
+                font-size: 0.8em;
+            }
+            .table-responsive {
+                max-height: 350px; /* Smaller max-height for mobile */
+            }
+        }
+        /* --- Style for warning message --- */
+        .warning-message {
+            color: red;
+            font-size: 0.85em;
+            margin-top: 5px;
+            text-align: right;
+            height: 1.2em; /* To prevent layout jumps */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .warning-message.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-  <div class="bg-white border-bottom p-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-    <h1 class="text-primary mb-3 mb-md-0" style="font-size:1.8rem;">دروس کامیپتر 4033</h1>
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-outline-primary active" id="btnPeyvaste">پیوسته</button>
-      <button type="button" class="btn btn-outline-primary" id="btnNapeyvaste">ناپیوسته</button>
-      <button type="button" class="btn btn-outline-primary" id="btnOmumi">عمومی</button>
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">لیست دروس دانشگاه تهران شمال</a>
+
+        <div class="theme-toggle-container">
+            <button id="theme-toggle" class="theme-toggle" aria-label="تغییر به حالت تاریک">
+                <span class="light-icon" aria-hidden="true">☀️</span>
+                <span class="dark-icon" aria-hidden="true">🌙</span>
+                <span class="toggle-track"></span>
+            </button>
+        </div>
+
     </div>
-  </div>
-  <div class="update-text text-end pe-4">
-    آخرین به روز رسانی ۹ تیر ۱۴۰۴ ساعت ۰۰:۳۰
-  </div>
-  <div class="table-area" id="table-container"></div>
+</nav>
 
-  <!-- Floating Action Button -->
-  <button class="fab" id="toggleDark" aria-label="تغییر حالت تم">
-    <!-- Moon icon -->
-    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" style="display:none;">
-      <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
+<main id="main-content" class="container mt-4">
+    <div id="filter-buttons" class="d-flex flex-wrap justify-content-center mb-3">
+        <div class="btn-group" role="group" aria-label="Course type selection">
+            <button type="button" id="btnPeyvaste" class="btn btn-primary active">کارشناسی پیوسته</button>
+            <button type="button" id="btnNapeyvaste" class="btn btn-outline-primary">کارشناسی ناپیوسته</button>
+            <button type="button" id="btnOmumi" class="btn btn-outline-primary">دروس عمومی</button>
+        </div>
+    </div>
 
-    </svg>
-    <!-- Sun icon -->
-    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" style="display:block;">
-      <path d="M8 4.5A3.5 3.5 0 1 1 4.5 8 3.5 3.5 0 0 1 8 4.5zm0-3a.5.5 0 0 1 .5.5V3a.5.5 0 0 1-1 0V2A.5.5 0 0 1 8 1.5zm0 13a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm7-6a.50.5 0 0 1-.5.5H13a.5.5 0 0 1 0-1h1.5a.5.5 0 0 1 .5.5zM3 8a.5.5 0  0 1-.5.5H1a.5.5 0  0 1 0-1h1.5A.5.5 0  0 1 3 8zm9.657-5.657a.5.5 0  0 1 .707 0l.707.707a.5.5 0  1 1-.707.707l-.707-.707a.5.5 0  0 1 0-.707zM3.464 12.536a.5.5 0  0 1 .707 0l.707.707a.5.5 0  0 1-.707.707l-.707-.707a.5.5 0  0 1 0-.707zm8.485 1.415a.5.5  0 0 1 0-.707l.707-.707a.5.5 0  1 1 .707.707l-.707.707a.5.5 0  0 1-.707 0zM3.464   3.464a.5.5 0  0 1 0 .707l-.707.707a.5.5 0  1 1-.707-.707l.707-.707a.5.50 0  0 1 .707 0z"/>
-    </svg>
-  </button>
+    <div id="search-bar-container" class="container my-3 search-input-container">
+        <input type="text" id="searchInput" class="form-control form-control-lg form-control-search" placeholder="جستجو در جدول...">
+        <i class="fas fa-search"></i>
+        <div id="keyboardWarning" class="warning-message">کیبورد فارسی را فعال کنید!</div>
+    </div>
 
-  <script>
+    <div class="container my-4">
+        <div id="table-container" class="table-responsive shadow-sm rounded">
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="container py-3">
+        <div class="last-modified-container">
+            <p id="last-modified-date"></p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    /* ───────────────────── ۱) داده‌های CSV ───────────────────── */
     const csvDataList = [
-      `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
-6138153620,نظریه زبان‌ها و ماشین‌ها,نظري,3,0,6120192,,,,,30,,1404/06/01 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-4628156372,کارآموزی,كارآموزي,0,1,611048,,,معصومه دامرودی,,0,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+        `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
 4628169362,سیستم های عامل,نظري,3,0,6110471,,,,,25,,1404/05/26 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628169362,سیستم های عامل,نظري,3,0,6110461,,,,,25,,1404/05/26 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 7000031547,سیستم های عامل,نظري,3,0,611047,.استادغفوری میرسرایی 5شنبه 13تا20:30,,نوا اسلامی,,25,,1404/05/26 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 7000031547,سیستم های عامل,نظري,3,0,611046,.استاد زهرا جعفری,پنج شنبه  از 07:30 تا 09:50 پنج شنبه  از ...,نوا اسلامی,,25,,1404/05/26 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-4628137064,طراحی الگوریتم‌ها,نظري,3,0,6110451,,,,,50,,1404/05/27 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+4628137064,طراحی الگوریتم‌ها,نظري,3,0,6110451,,,نوا اسلامی,,50,,1404/05/27 از 08:00 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628137064,طراحی الگوریتم‌ها,نظري,3,0,611045,,شنبه  از 13:00 تا 15:30 شنبه  از  از ...,حامد امیرخسرو,,50,,1404/05/27 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628150360,معادلات دیفرانسیل,نظري,3,0,6110441,,,,,30,,1404/05/30 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 7000031529,معادلات دیفرانسیل,نظري,3,0,611044,,يكشنبه  از 07:30 تا 09:50 يكشنبه  از  از ...,سید محسن محمدی,,30,,1404/05/30 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -258,9 +506,10 @@
 7000031527,ریاضی عمومی 1,نظري,3,0,611038,,يكشنبه  از 07:30 تا 09:50 يكشنبه  از  از ...,مجید ریاضی ماهر,,30,,1404/05/25 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628183688,پروژه نرم افزار,عملي,0,3,611037,,,نوا اسلامی,,2,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628135451,شبکه‌های کامپیوتری,نظري,3,0,6110361,,,,,30,,1404/05/30 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-7000031550,شبکه های کامپیوتری,نظري,3,0,611036,,يكشنبه  از 13:00 تا 15:30 يكشنبه  از  از ...,سينا يعقوبي کرجي,,25,,1404/05/30 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+7000031550,شبکه های کامپیوتری,نظري,3,0,611036,یعقوبی گرجی,,نوا اسلامی,,30,,1404/05/30 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628156372,کارآموزی,كارآموزي,0,1,611034,,,سينا يعقوبي کرجي,,5,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628183688,پروژه نرم افزار,عملي,0,3,611033,,,سينا يعقوبي کرجي,,5,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+6138114704,پروژه,عملي,0,3,612032,,,سينا يعقوبي کرجي,,5,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628141460,فیزیک 1,نظري,3,0,6111041,,,,,30,,1404/05/25 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628141460,فیزیک 1,نظري,3,0,6111031,,,,,30,,1404/05/25 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628141460,فیزیک 1,نظري,3,0,6111021,,,,,30,,1404/05/25 از 08:30 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -302,13 +551,14 @@
 4628183688,پروژه نرم افزار,عملي,0,3,611002,,,علي محمودي درخش,,5,,,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4628135313,سیگنال ها و سیستم ها,نظري,3,0,6110011,,,,,50,,1404/05/25 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 7000031560,سیگنال ها و سیستم ها,نظري,3,0,611001,,پنج شنبه  از 07:30 تا 09:50 پنج شنبه  از ...,علي محمودي درخش,,50,,1404/05/25 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)`,
-      `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
+        `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
 6138150350,معادلات‌ دیفرانسیل‌,نظري,3,0,6120442,,,,,30,,1404/05/30 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138107856,آمار و احتمالات,نظري,3,0,6120432,,,,,30,,1404/06/02 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 1399129689,ریاضی‌ مهندسی‌,نظري,2,0,4120422,,,,,30,,1404/06/01 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 1399129689,ریاضی‌ مهندسی‌,نظري,2,0,4120412,,,,,30,,1404/06/01 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4609129689,ریاضی‌ مهندسی‌,نظري,2,0,4120421,,,,,30,,1404/06/01 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 4609129689,ریاضی‌ مهندسی‌,نظري,2,0,4120411,,,,,30,,1404/06/01 از 13:00 تا 14:30,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+6138156372,کارآموزی,كارآموزي,0,2,612035,,,سينا يعقوبي کرجي,,5,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138156372,کارآموزی,كارآموزي,0,2,612031,,,راحیل حسینی,,10,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138114704,پروژه,عملي,0,3,612029,,,راحیل حسینی,,10,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138156372,کارآموزی,كارآموزي,0,2,612027,,,ياسمن پولادزاده,,5,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -322,14 +572,13 @@
 6138155491,هوش مصنوعی,نظري,3,0,6120061,,,,,10,,1404/05/27 از 08:30 تا 10:00,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138156372,کارآموزی,كارآموزي,0,2,612005,,,علي محمودي درخش,,5,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 6138114704,پروژه,عملي,0,3,612004,,,علي محمودي درخش,,5,,,,كارشناسي ناپيوسته,حضوري,ارائه در سطح گروه آموزشی,,گروه آموزشي کامپيوتر و فناوري اطلاعات(2115730),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)`,
-      `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
-99062,ورزش 1,عملي,0.0,1.0,9943519-تهران شمال,,يكشنبه  از 09:50 تا 12:10 سه شنبه  از ...,فرید سلحشوری,,20,,1404/05/21 از 09:50 تا 12:10,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+        `كد درس,نام درس,نوع درس,تعداد واحد نظري,تعداد واحد عملي,كد ارائه کلاس درس,نام كلاس درس,زمانبندي تشکيل کلاس,استاد,ساير اساتيد,حداكثر ظرفيت,تعداد ثبت نامي تاکنون,زمان امتحان,مكان برگزاري,مقطع ارائه درس,نوع ارائه,سطح ارائه,دانشجويان مجاز به اخذ کلاس,گروه آموزشی,دانشکده,واحد,استان
 98841,اندیشه اسلامی 2‌ (نبوت و امامت),نظري,2.0,0.0,201_تهران شمال,,يكشنبه  از 13:00 تا 18:00,محسن خوش فر,,44,,1404/05/15 از 08:00 تا 10:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 90610,اندیشه اسلامی 1 (مبدا ومعاد),نظري,2.0,0.0,200_تهران شمال,,يكشنبه  از 07:30 تا 12:10,محسن خوش فر,,44,,1404/05/21 از 08:30 تا 10:30,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-90029,فارسی,نظري,3.0,0.0,99534تهران شمال,,شنبه  از 13:00 تا 19:40,رویا گل احمدی,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-90029,فارسی,نظري,3.0,0.0,99533-تهران شمال,,چهارشنبه  از 13:00 تا 19:40,حميدرضا مقدسي,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+90029,فارسی,نظري,3.0,0.0,99534تهران شمال,,شنبه  از 13:00 تا 19:40,ارسطو جنیدی,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+90029,فارسی,نظري,3.0,0.0,99533-تهران شمال,,چهارشنبه  از 13:00 تا 19:40,احسان رضاقلي,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 90029,فارسی,نظري,3.0,0.0,99532-تهران شمال,,سه شنبه  از 07:30 تا 14:40,ليلا سليماني,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
-90029,فارسی,نظري,3.0,0.0,99531-تهران شمال,,يكشنبه  از 07:30 تا 12:10 دوشنبه  از ...,مهسا سادات سيد صالحي,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+90029,فارسی,نظري,3.0,0.0,99531-تهران شمال,,يكشنبه  از 07:30 تا 12:10 دوشنبه  از ...,بهاره خانقلی,,40,,1404/05/30 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 90180,زبان خارجی,نظري,3.0,0.0,781-تهران شمال,,يكشنبه  از 09:00 تا 11:30 سه شنبه  از ...,نفیسه ارفع الرفیعی,,50,,1404/05/25 از 10:30 تا 12:00,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943509-تهران شمال,,شنبه  از 15:15 تا 17:30 دوشنبه  از 15:30 ...,میترا زندیه,,25,,1404/05/20 از 15:00 تا 17:15,157 - تهران شمال-ژیمناستیک 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943504-تهران شمال,,شنبه  از 09:50 تا 12:10 دوشنبه  از 09:50 ...,فاطمه مهرابي اورزمان,,25,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-تنیس روی میز,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -341,6 +590,7 @@
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994321-تهران شمال,,يكشنبه  از 12:10 تا 14:25 سه شنبه  از ...,بهرام صالح نیا,,20,,1404/05/21 از 12:10 تا 14:25,157 - تهران شمال-چندمنظوره 3,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994320-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,بهرام صالح نیا,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-چندمنظوره 3,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994319-تهران شمال,,يكشنبه  از 12:10 تا 14:25 چهارشنبه  از ...,محمدحسین نفر,,20,,1404/05/21 از 12:10 تا 14:25,157 - تهران شمال-چندمنظوره 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+99079,تربیت بدنی,نظري_عملي,0.5,0.5,994318-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,محمدحسین نفر,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-چندمنظوره 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994316-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,محسن توکلی,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-چندمنظوره 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994317-تهران شمال,,يكشنبه  از 12:10 تا 14:25 سه شنبه  از ...,محسن توکلی,,20,,1404/05/21 از 12:10 تا 14:25,157 - تهران شمال-چندمنظوره 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943528-تهران شمال,,يكشنبه  از 17:15 تا 19:30 سه شنبه  از ...,محمد جواد هدايتي,,20,,1404/05/21 از 17:15 تا 19:30,157 - تهران شمال-201 مدیریت,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -353,6 +603,7 @@
 99062,ورزش 1,عملي,0.0,1.0,9943525-تهران شمال,,يكشنبه  از 09:50 تا 12:10 سه شنبه  از ...,شهرام اركاك,,20,,1404/05/21 از 09:50 تا 12:10,157 - تهران شمال-بدنسازی,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943524-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,شهرام اركاك,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-بدنسازی,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943523-تهران شمال,,يكشنبه  از 09:50 تا 12:10 سه شنبه  از ...,فرهاد نيکوسرشت,,20,,1404/05/21 از 09:50 تا 12:10,157 - تهران شمال-ژیمناستیک 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+99062,ورزش 1,عملي,0.0,1.0,9943522-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,فرهاد نيکوسرشت,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-ژیمناستیک 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943521-تهران شمال,,يكشنبه  از 09:50 تا 12:10 سه شنبه  از ...,پيمان طحان,,20,,1404/05/21 از 09:50 تا 12:10,157 - تهران شمال-ژیمناستیک 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943520-تهران شمال,,يكشنبه  از 07:30 تا 09:50 سه شنبه  از ...,پيمان طحان,,20,,1404/05/21 از 07:30 تا 09:50,157 - تهران شمال-ژیمناستیک 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943518-تهران شمال,,يكشنبه  از 09:50 تا 12:10 سه شنبه  از ...,بهرام صالح نیا,,20,,1404/05/21 از 09:50 تا 12:10,157 - تهران شمال-چندمنظوره 3,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -363,11 +614,13 @@
 99062,ورزش 1,عملي,0.0,1.0,9943507-تهران شمال,,شنبه  از 12:10 تا 14:25 دوشنبه  از 12:10 ...,الهام رضوان پور,,20,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-ژیمناستیک 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943506-تهران شمال,,شنبه  از 09:50 تا 12:10 دوشنبه  از 09:50 ...,الهام رضوان پور,,20,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-ژیمناستیک 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943505-تهران شمال,,شنبه  از 07:30 تا 09:50 دوشنبه  از 07:30 ...,الهام رضوان پور,,20,,1404/05/20 از 07:30 تا 09:50,157 - تهران شمال-ژیمناستیک 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+99062,ورزش 1,عملي,0.0,1.0,9943502-تهران شمال,,شنبه  از 12:10 تا 14:25 دوشنبه  از 12:10 ...,سحر رضائي,,20,,1404/05/20 از 12:10 تا 14:00,157 - تهران شمال-شطرنج,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943501-تهران شمال,,شنبه  از 09:50 تا 12:10 دوشنبه  از 09:50 ...,سحر رضائي,,20,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-شطرنج,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99062,ورزش 1,عملي,0.0,1.0,9943500-تهران شمال,,شنبه  از 07:30 تا 09:50 دوشنبه  از 07:30 ...,سحر رضائي,,20,,1404/05/20 از 07:30 تا 09:50,157 - تهران شمال-شطرنج,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994315-تهران شمال,,شنبه  از 13:00 تا 15:15 دوشنبه  از 13:00 ...,میترا زندیه,,20,,1404/05/20 از 15:30 تا 18:00,157 - تهران شمال-بدمینتون 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994314-تهران شمال,,شنبه  از 09:50 تا 12:10 دوشنبه  از 09:50 ...,مریم عرب زاده,,20,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-بدمینتون 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994313-تهران شمال,,شنبه  از 07:30 تا 09:50 دوشنبه  از 07:30 ...,مریم عرب زاده,,20,,1404/05/20 از 07:30 تا 09:50,157 - تهران شمال-بدمینتون 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
+99079,تربیت بدنی,نظري_عملي,0.5,0.5,99439-تهران شمال,,شنبه  از 12:10 تا 14:25 دوشنبه  از 12:10 ...,فاطمه معصومی فر,,20,,1404/05/20 از 12:10 تا 14:00,157 - تهران شمال-چندمنظوره 3,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,99433-تهران شمال,,شنبه  از 12:10 تا 14:25 دوشنبه  از 12:10 ...,هانیه یاری,,20,,1404/05/20 از 12:10 تا 14:00,157 - تهران شمال-چندمنظوره 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,99436-تهران شمال,,شنبه  از 12:10 تا 14:25 دوشنبه  از 12:10 ...,زهرا رجائي زاده,,20,,1404/05/20 از 12:10 تا 14:00,157 - تهران شمال-چندمنظوره 2,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
 99079,تربیت بدنی,نظري_عملي,0.5,0.5,994311-تهران شمال,,شنبه  از 09:50 تا 12:10 دوشنبه  از 09:50 ...,شيوا نوري پور,,20,,1404/05/20 از 09:50 تا 12:10,157 - تهران شمال-بدمینتون 1,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)
@@ -451,55 +704,239 @@
 99041,تاریخ تحلیلی صدر اسلام‌,نظري,2.0,0.0,136- تهران شمال,,شنبه  از 07:30 تا 12:10,حسین کفایتی,,44,,1404/05/27 از 13:00 تا 14:30,,كارشناسي پيوسته,حضوري,ارائه در سطح دانشکده,,گروه آموزشي دروس عمومي(2115799),157 - تهران شمال(157),157 - تهران شمال(21157),21 - تهران(21)`
     ];
 
-    let dark = false;
+    /* ───────────────────── ۲) متغیرهای سراسری ───────────────────── */
+    let parsedDataList                = [];
+    let currentActiveCategoryIndex    = 0;
+    let sortColumnIndex               = null;      // کدام ستون مرتب می‌شود
+    let sortDirection                 = 'asc';     // asc | desc
+    const copyableHeaders = ['كد درس','كد ارائه کلاس درس','نام درس'];
 
-    function parseCSV(csv) {
-      return csv.split('\n').map(r => r.split(','));
-    }
-    function toPersianNum(n) {
-      return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
-    }
+    /* ───────────────────── ۳) توابع کمکی ───────────────────── */
+    /* تبدیل رقم‌های انگلیسی به فارسی برای نمایش */
+    function toPersianNum(n){ return String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]); }
 
-    function showTable(data) {
-      const container = document.getElementById('table-container');
-      const tblClass = dark
-        ? 'table table-bordered table-striped table-hover align-middle table-dark'
-        : 'table table-bordered table-striped table-hover align-middle';
-      const theadClass = dark ? '' : 'table-dark';
-      let html = `<div class="table-responsive" style="max-height:100%"><table class="${tblClass}"><thead class="${theadClass}"><tr><th>ردیف</th>`;
-      data[0].forEach(h => html += `<th>${h}</th>`);
-      html += `</tr></thead><tbody>`;
-      for (let i = 1; i < data.length; i++) {
-        html += `<tr><td>${toPersianNum(i)}</td>`;
-        data[i].forEach(c => html += `<td>${c}</td>`);
-        html += `</tr>`;
-      }
-      html += `</tbody></table></div>`;
-      container.innerHTML = html;
+    /* تبدیل رقم‌های فارسی به انگلیسی برای پردازش */
+    function convertPersianDigits(str){
+        return String(str).replace(/[۰-۹]/g,d=>'0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]);
     }
 
-    const btns = [
-      document.getElementById('btnPeyvaste'),
-      document.getElementById('btnNapeyvaste'),
-      document.getElementById('btnOmumi')
-    ];
-    function activate(idx) {
-      btns.forEach((b,i)=>b.classList.toggle('active', i===idx));
-      showTable(parseCSV(csvDataList[idx]));
+    /* نرمال‌سازی متن برای جست‌وجو و مقایسه */
+    function normalizeTextForSearchAndDisplay(txt){
+        if(!txt) return '';
+        return String(txt)
+            .replace(/ي/g,'ی').replace(/ك/g,'ک')     // ی و ک عربی
+            .replace(/[آأإٱ]/g,'ا')                  // انواع الف
+            .replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])   // اعداد فارسی
+            .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u206F\uFEFF]/g,'')
+            .replace(/\s+/g,' ').trim();
     }
-    btns.forEach((b,i)=>b.addEventListener('click', ()=>activate(i)));
-    activate(0);
 
-    const moonIcon = document.getElementById('moonIcon');
-    const sunIcon  = document.getElementById('sunIcon');
-    document.getElementById('toggleDark').addEventListener('click', () => {
-      dark = !dark;
-      document.body.classList.toggle('dark-mode', dark);
-      moonIcon.style.display = dark ? 'block' : 'none';
-      sunIcon.style.display  = dark ? 'none'  : 'block';
-      const activeIdx = btns.findIndex(b=>b.classList.contains('active'));
-      showTable(parseCSV(csvDataList[activeIdx]));
+    /* پارس CSV خام به headers , data */
+    function parseCSV(csv){
+        if(!csv?.trim()) return {headers:[],data:[]};
+        const lines   = csv.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+        const headers = lines[0].split(',').map(h=>h.trim());
+        const data    = lines.slice(1).map(r=>r.split(',').map(c=>c.trim()));
+        return {headers,data};
+    }
+
+    /* ───── کلید تاریخ جلالی به عدد YYYYMMDD */
+    function jalaliKey(str){
+        const s = convertPersianDigits(str);
+        const m = s.match(/(\d{4})\s*[\/\-]\s*(\d{2})\s*[\/\-]\s*(\d{2})/);
+        return m ? (+m[1]*10000 + +m[2]*100 + +m[3]) : null;
+    }
+
+    /* ───── کلید ساعت (دقیقه از نیمه‌شب) */
+    function timeKey(str){
+        const s = convertPersianDigits(str);
+        const t = s.match(/(\d{1,2})\s*:\s*(\d{2})/);
+        return t ? (+t[1]*60 + +t[2]) : 0;
+    }
+
+    /* نگاشت روز هفته */
+    const weekDayMap = {'شنبه':0,'یکشنبه':1,'دوشنبه':2,'سه شنبه':3,'سه‌شنبه':3,
+        'چهارشنبه':4,'پنج شنبه':5,'پنج‌شنبه':5,'جمعه':6};
+
+    /* ───────────────────── ۴) مرتب‌سازی داده‌ها ───────────────────── */
+    function sortCurrentData(col){
+        const parsed = parsedDataList[currentActiveCategoryIndex];
+        if(!parsed) return;
+
+        const header   = parsed.headers[col];
+        const collator = new Intl.Collator('fa',{numeric:true,sensitivity:'base'});
+
+        parsed.data.sort((a,b)=>{
+            let ka,kb;
+
+            if(header==='زمان امتحان'){                 // بر اساس تاریخ سپس ساعت
+                ka = jalaliKey(a[col]) ?? Infinity;
+                kb = jalaliKey(b[col]) ?? Infinity;
+                if(ka===kb){ ka += timeKey(a[col])/10000; kb += timeKey(b[col])/10000; }
+            }
+            else if(header==='زمانبندي تشکيل کلاس'){    // روز هفته سپس ساعت
+                ka = jalaliKey(a[col]);
+                kb = jalaliKey(b[col]);
+
+                if(ka===null || kb===null){               // اگر تاریخ صریح نبود
+                    const dA = Object.entries(weekDayMap).find(([k])=>a[col].includes(k));
+                    const dB = Object.entries(weekDayMap).find(([k])=>b[col].includes(k));
+                    ka = (dA ? dA[1] : 99)*1440 + timeKey(a[col]);
+                    kb = (dB ? dB[1] : 99)*1440 + timeKey(b[col]);
+                }else if(ka===kb){
+                    ka += timeKey(a[col])/10000;
+                    kb += timeKey(b[col])/10000;
+                }
+            }
+            else{                                       // سایر ستون‌ها
+                ka = normalizeTextForSearchAndDisplay(a[col]);
+                kb = normalizeTextForSearchAndDisplay(b[col]);
+                return sortDirection==='asc' ? collator.compare(ka,kb)
+                    : -collator.compare(ka,kb);
+            }
+            return sortDirection==='asc' ? ka-kb : kb-ka;
+        });
+    }
+
+    /* ───────────────────── ۵) ساخت و نمایش جدول ───────────────────── */
+    function showTable(parsedObj,search=''){
+        const container = document.getElementById('table-container');
+        if(!parsedObj.headers.length){
+            container.innerHTML='<div class="alert alert-warning text-center">داده‌ای برای نمایش نیست.</div>';
+            return;
+        }
+
+        /* مرتب‌سازی بر اساس ستون انتخابی */
+        if(sortColumnIndex!==null) sortCurrentData(sortColumnIndex);
+
+        /* فیلتر بر اساس جست‌وجو */
+        let data = parsedObj.data;
+        if(search){
+            const term = normalizeTextForSearchAndDisplay(search).toLowerCase();
+            data = data.filter(r=>r.some(c=>normalizeTextForSearchAndDisplay(c).toLowerCase().includes(term)));
+        }
+        if(!data.length){
+            container.innerHTML='<div class="alert alert-info text-center">موردی پیدا نشد.</div>';
+            return;
+        }
+
+        /* تولید HTML جدول */
+        const h = parsedObj.headers;
+        let html = `<div class="table-responsive shadow-sm rounded"><table class="table table-bordered table-striped table-hover align-middle"><thead><tr><th>ردیف</th>`;
+        h.forEach((title,i)=>{
+            const arrow = (sortColumnIndex===i)?(sortDirection==='asc'?' ▲':' ▼'):'';
+            html += `<th data-col="${i}" style="cursor:pointer">${title}${arrow}</th>`;
+        });
+        html += `</tr></thead><tbody>`;
+        data.forEach((row,ridx)=>{
+            html += `<tr><td>${toPersianNum(ridx+1)}</td>`;
+            row.forEach((cell,ci)=>{
+                const disp = toPersianNum(cell);
+                const copy = copyableHeaders.includes(h[ci]) ? 'table-cell-copyable' : '';
+                html += `<td class="${copy}">
+                 <span class="cell-content">${disp}</span>
+                 ${copy?'<i class="fas fa-copy copy-icon"></i><span class="copy-message">کپی شد!</span>':''}
+               </td>`;
+            });
+            html += `</tr>`;
+        });
+        html += `</tbody></table></div>`;
+        container.innerHTML = html;
+
+        attachCopyHandlers();
+        attachSortHandlers();
+    }
+
+    /* ─── کپی در کلیپ‌بورد ─── */
+    function attachCopyHandlers(){
+        document.querySelectorAll('.table-cell-copyable').forEach(td=>{
+            td.onclick = async ()=>{
+                const text = td.querySelector('.cell-content').textContent.trim();
+                const msg  = td.querySelector('.copy-message');
+                try{
+                    await navigator.clipboard.writeText(text);
+                    msg?.classList.add('show');
+                    setTimeout(()=>msg?.classList.remove('show'),1500);
+                }catch(e){ console.error('Copy failed',e); }
+            };
+        });
+    }
+
+    /* ─── رویداد کلیک سرتیترها ─── */
+    function attachSortHandlers(){
+        document.querySelectorAll('#table-container thead th[data-col]').forEach(th=>{
+            const col = +th.dataset.col;
+            th.onclick = ()=>{
+                if(sortColumnIndex===col){ sortDirection = sortDirection==='asc'?'desc':'asc'; }
+                else{ sortColumnIndex = col; sortDirection='asc'; }
+                const term = document.getElementById('searchInput').value;
+                showTable(parsedDataList[currentActiveCategoryIndex], term);
+            };
+        });
+    }
+
+    /* ───────────────────── ۶) آماده‌سازی پس از بارگذاری DOM ───────────────────── */
+    document.addEventListener('DOMContentLoaded', ()=>{
+        /* پارس تمام CSVها */
+        parsedDataList = csvDataList.map(parseCSV);
+
+        /* دکمه‌های فیلتر دسته */
+        const btns = [
+            document.getElementById('btnPeyvaste'),
+            document.getElementById('btnNapeyvaste'),
+            document.getElementById('btnOmumi')
+        ];
+        function activate(idx){
+            btns.forEach(b=>b && b.classList.remove('active','btn-primary','btn-outline-primary'));
+            btns.forEach(b=>b && b.classList.add('btn-outline-primary'));
+            btns[idx]?.classList.add('active','btn-primary');
+            currentActiveCategoryIndex = idx;
+            sortColumnIndex = null;
+            document.getElementById('searchInput').value='';
+            showTable(parsedDataList[idx],'');
+        }
+        btns.forEach((b,i)=>b?.addEventListener('click',()=>activate(i)));
+        activate(0);                     // دستهٔ پیش‌فرض
+
+        /* جست‌وجو با هشدارِ کیبورد */
+        const searchBox   = document.getElementById('searchInput');
+        const warn        = document.getElementById('keyboardWarning');
+        let warnTimeout;
+        function showWarn(msg){
+            warn.textContent = msg;
+            warn.classList.add('show');
+            clearTimeout(warnTimeout);
+            warnTimeout = setTimeout(()=>warn.classList.remove('show'),2000);
+        }
+        searchBox?.addEventListener('input',e=>{
+            let v=e.target.value,out='',eng=false;
+            for(const ch of v){
+                if(/[a-zA-Z]/.test(ch)){ eng=true; }
+                else if(/[0-9]/.test(ch)){ out+=toPersianNum(ch); }
+                else{ out+=ch; }
+            }
+            if(eng) showWarn('کیبورد فارسی را فعال کنید!');
+            searchBox.value=out;
+            showTable(parsedDataList[currentActiveCategoryIndex], out);
+        });
+
+        /* تم روشن/تاریک */
+        const toggle = document.getElementById('theme-toggle');
+        function setTheme(t){
+            document.body.classList.toggle('dark-mode',t==='dark');
+            toggle.setAttribute('aria-label',t==='dark'?'تغییر به حالت روشن':'تغییر به حالت تاریک');
+            localStorage.setItem('theme',t);
+            showTable(parsedDataList[currentActiveCategoryIndex], searchBox.value);
+        }
+        const saved = localStorage.getItem('theme');
+        setTheme(saved ? saved : (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+        toggle?.addEventListener('click',()=>setTheme(document.body.classList.contains('dark-mode')?'light':'dark'));
+
+        /* تاریخ ثابتِ آخرین بروزرسانی */
+        document.getElementById('last-modified-date').textContent =
+            toPersianNum('آخرین به‌روزرسانی: 9 تیر 1404 ساعت 08:30');
     });
-  </script>
+</script>
+
 </body>
 </html>
